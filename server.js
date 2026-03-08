@@ -8,7 +8,12 @@ const { canPlayCard, applyCardEffect } = require('./server/rules');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 // Statik dosyaları sun (Frontend)
 app.use(express.static(path.join(__dirname, 'www')));
@@ -115,6 +120,7 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
 
     socket.on('createRoom', (playerName, callback) => {
+        console.log(`[CREATE ROOM] İstek geldi. Socket: ${socket.id}, Player: ${playerName}`);
         let roomId;
         do {
             roomId = generateRoomCode();

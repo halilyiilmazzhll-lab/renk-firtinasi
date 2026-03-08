@@ -67,8 +67,12 @@ function setupEventListeners() {
         // Adı kaydet
         try { localStorage.setItem('duno_player_name', nameInput); } catch (e) { }
 
+        console.log("Setup Action clicked! Host:", clientState.isHost, "Name:", nameInput);
+
         if (clientState.isHost) {
+            console.log("Emitting createRoom...");
             socket.emit('createRoom', nameInput, (res) => {
+                console.log("createRoom response:", res);
                 if (res.success) {
                     clientState.roomId = res.roomId;
                     clientState.players = res.players;
