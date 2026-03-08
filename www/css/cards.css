@@ -267,7 +267,7 @@
 
 /* ── El Kartları ── */
 .hand-card {
-    margin-right: -32px;
+    margin-right: -22px;
     position: relative;
     transition: transform var(--transition-fast), margin var(--transition-fast), z-index var(--transition-fast);
 }
