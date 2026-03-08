@@ -2,6 +2,12 @@
    APP.JS — İstemci Oyun Akışı & Ağ
    ══════════════════════════════════════ */
 
+// Render üzerinde barındırılacak adres (Kullanıcı deploy ettikten sonra güncelleyebilir)
+const PROD_SERVER_URL = 'https://rf-sunucu.onrender.com';
+const isLocal = window.location.protocol === 'http:' && (window.location.hostname === 'localhost' || window.location.hostname.includes('192.168.'));
+const SERVER_URL = (isLocal || window.location.protocol === 'https:') && !window.location.protocol.includes('file') ? '/' : PROD_SERVER_URL;
+const socket = io(SERVER_URL);
+
 document.addEventListener('DOMContentLoaded', initApp);
 
 function initApp() {
