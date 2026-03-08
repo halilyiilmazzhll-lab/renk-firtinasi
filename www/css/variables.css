@@ -19,8 +19,8 @@
     --bg-surface-light: #2a3a5c;
 
     --text-primary: #f0f0f0;
-    --text-secondary: #a0aec0;
-    --text-muted: #6b7c93;
+    --text-secondary: #c5cdd8;
+    --text-muted: #8a9bb5;
 
     --accent: #e94560;
     --accent-glow: rgba(233, 69, 96, 0.3);
@@ -59,6 +59,7 @@
     --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --glow-playable: 0 0 10px rgba(255, 255, 255, 0.35), 0 0 20px rgba(233, 69, 96, 0.25);
 
     /* Safe area */
     --safe-top: env(safe-area-inset-top, 0px);

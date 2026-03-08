@@ -191,12 +191,26 @@
     color: var(--text-secondary);
     border: 2px solid transparent;
     transition: all var(--transition-fast);
+    position: relative;
 }
 
 .opponent-chip.active-turn {
     border-color: var(--accent);
     color: var(--text-primary);
-    box-shadow: 0 0 12px var(--accent-glow);
+    background: rgba(233, 69, 96, 0.12);
+    box-shadow: 0 0 16px var(--accent-glow);
+    animation: pulse-glow 2s infinite;
+}
+
+.opponent-turn-badge {
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: rgba(233, 69, 96, 0.2);
+    padding: 1px 6px;
+    border-radius: 6px;
 }
 
 .opponent-dot {
@@ -206,10 +220,11 @@
 }
 
 .opponent-count {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 2px 7px;
     border-radius: 8px;
     font-size: 0.75rem;
+    font-weight: 800;
 }
 
 /* Oyun Alanı */
@@ -219,14 +234,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs);
     min-height: 0;
 }
 
 .play-area-inner {
     display: flex;
-    gap: var(--spacing-xl);
+    gap: 28px;
     align-items: center;
     justify-content: center;
 }
@@ -236,13 +251,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: 4px;
 }
 
 .zone-label {
-    font-size: var(--font-sm);
+    font-size: 0.7rem;
     color: var(--text-muted);
-    font-weight: 700;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.zone-helper {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    opacity: 0.7;
+    max-width: 80px;
+    text-align: center;
+    line-height: 1.2;
 }
 
 /* FIRT Butonu */
@@ -273,12 +300,12 @@
 
 /* Oyuncu El Alanı */
 .hand-area {
-    background: linear-gradient(180deg, transparent, rgba(15, 52, 96, 0.5));
-    padding: var(--spacing-sm) var(--spacing-md);
-    padding-bottom: calc(var(--safe-bottom) + var(--spacing-sm));
+    background: linear-gradient(180deg, transparent 0%, rgba(15, 52, 96, 0.4) 40%, rgba(10, 40, 80, 0.6) 100%);
+    padding: var(--spacing-xs) var(--spacing-md);
+    padding-bottom: calc(var(--safe-bottom) + var(--spacing-xs));
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: 2px;
 }
 
 .current-player-info {
@@ -286,9 +313,19 @@
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
-    font-weight: 700;
+    font-weight: 800;
     font-size: var(--font-md);
+    color: var(--text-primary);
+    background: rgba(233, 69, 96, 0.1);
+    border: 1px solid rgba(233, 69, 96, 0.2);
+    border-radius: 12px;
+    padding: 4px 14px;
+}
+
+.player-card-count {
     color: var(--accent);
+    font-weight: 900;
+    font-size: 1.1em;
 }
 
 .hand-scroll {

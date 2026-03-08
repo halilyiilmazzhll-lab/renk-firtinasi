@@ -151,13 +151,15 @@ function renderOpponents() {
     const bar = document.getElementById('opponents-bar');
     bar.innerHTML = '';
 
+    const playerEmojis = ['🎯', '🎲', '🃏', '♟️'];
+
     gameState.players.forEach((player, idx) => {
-        if (player.isMe) return; // Kendimi üstte gösterme
+        if (player.isMe) return;
 
         const chip = document.createElement('div');
         chip.className = 'opponent-chip';
-        // Eğer sıra ondaysa parlat
-        if (idx === gameState.currentPlayerIndex) {
+        const isActive = (idx === gameState.currentPlayerIndex);
+        if (isActive) {
             chip.classList.add('active-turn');
         }
 
@@ -165,17 +167,29 @@ function renderOpponents() {
         dot.className = 'opponent-dot';
         dot.style.background = PLAYER_COLORS[idx % PLAYER_COLORS.length];
 
+        const emoji = document.createElement('span');
+        emoji.textContent = playerEmojis[idx % playerEmojis.length];
+        emoji.style.fontSize = '0.9em';
+
         const name = document.createElement('span');
         name.textContent = player.name;
 
         const count = document.createElement('span');
         count.className = 'opponent-count';
-        // Server'dan handCount geliyor
-        count.textContent = `${player.handCount || 0}`;
+        count.textContent = `${player.handCount || 0} 🃏`;
 
         chip.appendChild(dot);
+        chip.appendChild(emoji);
         chip.appendChild(name);
         chip.appendChild(count);
+
+        if (isActive) {
+            const badge = document.createElement('span');
+            badge.className = 'opponent-turn-badge';
+            badge.textContent = 'Sırada';
+            chip.appendChild(badge);
+        }
+
         bar.appendChild(chip);
     });
 }
@@ -185,14 +199,13 @@ function renderPlayerInfo() {
     const me = getCurrentPlayer();
     if (!me) return;
 
-    // Benim indeximi bulmak için
     const myIndex = gameState.players.findIndex(p => p.isMe);
     const bg = PLAYER_COLORS[myIndex % PLAYER_COLORS.length];
 
     info.innerHTML = `
     <span style="width:12px;height:12px;border-radius:50%;background:${bg};display:inline-block"></span>
-    <span>Ben (${me.name})</span>
-    <span style="color:var(--text-muted);font-size:0.85em">(${me.hand.length} kart)</span>
+    <span>Sen (${me.name})</span>
+    <span class="player-card-count">${me.hand.length} 🃏</span>
   `;
 }
 
@@ -227,18 +240,18 @@ function renderGame() {
     renderFirtButton();
     renderPassButton();
 
-    // Mesaj alanı
+    // Mesaj alanı (tutarlı kısa metinler)
     const activePlayer = getActivePlayer();
     if (activePlayer) {
         if (activePlayer.socketId === socket.id) {
-            updateMessage('Sıra sende!');
+            updateMessage('🎯 Sıra sende!');
             document.getElementById('game-message').style.color = 'var(--accent)';
 
             if (lastTurnSocketId !== socket.id) {
-                triggerMyTurnGlow(); // Sadece sıra bana "yeni" geçtiyse parlat
+                triggerMyTurnGlow();
             }
         } else {
-            updateMessage(`Sıra ${activePlayer.name} adlı oyuncuda...`);
+            updateMessage(`Sıra: ${activePlayer.name}`);
             document.getElementById('game-message').style.color = 'var(--text-secondary)';
         }
         lastTurnSocketId = activePlayer.socketId;

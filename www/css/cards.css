@@ -247,12 +247,15 @@
 
 /* ── Oynanamayanlar ── */
 .card.unplayable {
-    opacity: 0.4;
-    filter: grayscale(0.3) brightness(0.85);
+    opacity: 0.35;
+    filter: grayscale(0.4) brightness(0.7);
+    transform: scale(0.95);
 }
 
+/* ── Oynanabilir Kartlar (Güçlü vurgulama) ── */
 .card.playable {
-    border-color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow: var(--glow-playable);
 }
 
 .card.playable::after {
@@ -260,30 +263,32 @@
     position: absolute;
     inset: -3px;
     border-radius: calc(var(--card-radius) + 3px);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.6);
     animation: pulse-glow 1.5s infinite;
     z-index: 5;
 }
 
 /* ── El Kartları ── */
 .hand-card {
-    margin-right: -22px;
+    margin-right: -18px;
     position: relative;
     transition: transform var(--transition-fast), margin var(--transition-fast), z-index var(--transition-fast);
 }
 
 .hand-card:hover,
 .hand-card:active {
-    transform: translateY(-20px) scale(1.1);
-    margin-right: 5px;
-    /* Pushes the next card slightly to fully reveal this card */
+    transform: translateY(-22px) scale(1.12);
+    margin-left: 4px;
+    margin-right: 4px;
     z-index: 20;
 }
 
 .hand-card.selected {
-    transform: translateY(-25px) scale(1.15);
+    transform: translateY(-26px) scale(1.15);
     z-index: 30;
     box-shadow: var(--shadow-card-hover);
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .hand-card:last-child {
