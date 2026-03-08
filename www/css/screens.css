@@ -1,0 +1,568 @@
+/* ════════════════════════════════
+   ANA MENÜ
+   ════════════════════════════════ */
+.menu-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    gap: var(--spacing-xl);
+    background: radial-gradient(ellipse at 50% 30%, #16213e 0%, var(--bg-primary) 70%);
+}
+
+.logo-area {
+    text-align: center;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-sm);
+    animation: float 3s ease-in-out infinite;
+}
+
+.game-title {
+    font-size: var(--font-3xl);
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--card-red), var(--card-yellow), var(--card-green), var(--card-blue));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 4s ease infinite;
+}
+
+.game-subtitle {
+    font-size: var(--font-md);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+    font-weight: 600;
+}
+
+.menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.version-text {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    position: absolute;
+    bottom: calc(var(--safe-bottom) + 12px);
+}
+
+/* ════════════════════════════════
+   OYUNCU AYARLARI
+   ════════════════════════════════ */
+.setup-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    gap: var(--spacing-lg);
+    overflow-y: auto;
+    background: var(--bg-primary);
+}
+
+.screen-title {
+    font-size: var(--font-2xl);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.label {
+    font-size: var(--font-md);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+    font-weight: 600;
+}
+
+.count-selector {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.count-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: var(--font-xl);
+    font-weight: 800;
+    transition: all var(--transition-fast);
+    border: 3px solid transparent;
+}
+
+.count-btn.active {
+    background: var(--accent);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.player-names-section {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.player-name-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.player-color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.player-name-input {
+    flex: 1;
+    height: 48px;
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 0 var(--spacing-md);
+    color: var(--text-primary);
+    font-size: var(--font-md);
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: border-color var(--transition-fast);
+}
+
+.player-name-input:focus {
+    border-color: var(--accent);
+}
+
+.player-name-input::placeholder {
+    color: var(--text-muted);
+}
+
+.setup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: auto;
+    padding-bottom: var(--spacing-md);
+}
+
+/* ════════════════════════════════
+   OYUN EKRANI
+   ════════════════════════════════ */
+#screen-game {
+    background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 50%, #0f3460 100%);
+}
+
+/* Rakip Bilgileri */
+.opponents-bar {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 44px;
+}
+
+.opponent-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--bg-surface);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: var(--font-sm);
+    font-weight: 700;
+    color: var(--text-secondary);
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.opponent-chip.active-turn {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.opponent-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.opponent-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+}
+
+/* Oyun Alanı */
+.play-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    min-height: 0;
+}
+
+.play-area-inner {
+    display: flex;
+    gap: var(--spacing-xl);
+    align-items: center;
+    justify-content: center;
+}
+
+.deck-zone,
+.discard-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.zone-label {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+/* FIRT Butonu */
+.btn-firt {
+    background: linear-gradient(135deg, #ff6b35, #e74c3c);
+    color: white;
+    font-size: var(--font-xl);
+    font-weight: 900;
+    padding: 12px 40px;
+    border-radius: 30px;
+    letter-spacing: 2px;
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+    animation: firt-pulse 1s infinite;
+}
+
+.btn-firt:active {
+    transform: scale(0.9);
+}
+
+/* Oyun Mesajı */
+.game-message {
+    font-size: var(--font-md);
+    color: var(--text-secondary);
+    font-weight: 700;
+    text-align: center;
+    min-height: 24px;
+}
+
+/* Oyuncu El Alanı */
+.hand-area {
+    background: linear-gradient(180deg, transparent, rgba(15, 52, 96, 0.5));
+    padding: var(--spacing-sm) var(--spacing-md);
+    padding-bottom: calc(var(--safe-bottom) + var(--spacing-sm));
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.current-player-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: var(--font-md);
+    color: var(--accent);
+}
+
+.hand-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--spacing-sm) 0;
+    padding-top: 20px;
+    scrollbar-width: none;
+}
+
+.hand-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.hand-cards {
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--spacing-md);
+    min-width: min-content;
+}
+
+.btn-pass {
+    background: var(--bg-surface-light);
+    color: var(--text-secondary);
+    align-self: center;
+    margin-top: var(--spacing-xs);
+}
+
+/* ════════════════════════════════
+   SIRA GEÇİŞ EKRANI
+   ════════════════════════════════ */
+.turn-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 40%, #16213e, var(--bg-primary));
+}
+
+.turn-icon {
+    font-size: 4rem;
+    animation: spin-slow 2s linear infinite;
+}
+
+.turn-title {
+    font-size: var(--font-2xl);
+    font-weight: 800;
+}
+
+.turn-player {
+    font-size: var(--font-xl);
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.turn-hint {
+    font-size: var(--font-md);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ════════════════════════════════
+   KAZANAN EKRANI
+   ════════════════════════════════ */
+.winner-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, #2c1654, var(--bg-primary));
+    position: relative;
+    overflow: hidden;
+}
+
+.winner-icon {
+    font-size: 5rem;
+    animation: bounce-in 0.6s ease;
+}
+
+.winner-title {
+    font-size: var(--font-3xl);
+    font-weight: 900;
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.winner-name {
+    font-size: var(--font-2xl);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.winner-subtitle {
+    font-size: var(--font-lg);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.winner-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: var(--spacing-md);
+}
+
+.winner-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    top: -10px;
+    animation: confetti-fall linear forwards;
+}
+
+/* ════════════════════════════════
+   KURALLAR POPUP
+   ════════════════════════════════ */
+.rules-content {
+    padding-top: var(--spacing-xl);
+}
+
+.rules-content h3 {
+    font-size: var(--font-xl);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.rules-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--bg-surface);
+    border-radius: 12px;
+}
+
+.rule-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-sm);
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.rule-item p {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+/* ════════════════════════════════
+   RENK SEÇİMİ
+   ════════════════════════════════ */
+.color-picker h3 {
+    text-align: center;
+    font-size: var(--font-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.color-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.color-option {
+    height: 72px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    transition: transform var(--transition-fast);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.color-option:active {
+    transform: scale(0.92);
+}
+
+.color-option.color-red {
+    background: var(--card-red);
+}
+
+.color-option.color-blue {
+    background: var(--card-blue);
+}
+
+.color-option.color-green {
+    background: var(--card-green);
+}
+
+.color-option.color-yellow {
+    background: var(--card-yellow);
+    color: #333;
+}
+
+/* ══════════════════════════════════════
+   LOBI EKRANI STİLİ
+   ══════════════════════════════════════ */
+#screen-lobby .room-code-display {
+    background: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border: 1px dashed var(--accent);
+}
+
+.player-list {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lobby-player-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lobby-player-item:last-child {
+    border-bottom: none;
+}
+
+.lobby-player-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.lobby-host-badge {
+    font-size: 0.8rem;
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

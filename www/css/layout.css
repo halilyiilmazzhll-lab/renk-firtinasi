@@ -1,0 +1,155 @@
+/* ── Genel Ekran Yapısı ── */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+    overflow: hidden;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* ── Butonlar ── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    min-height: var(--btn-height);
+    padding: 0 var(--spacing-lg);
+    border-radius: var(--btn-radius);
+    font-size: var(--font-lg);
+    font-weight: 700;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    user-select: none;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent), #c23152);
+    color: white;
+    box-shadow: var(--shadow-btn), 0 0 20px var(--accent-glow);
+}
+
+.btn-secondary {
+    background: var(--bg-surface-light);
+    color: var(--text-primary);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    min-height: 40px;
+    font-size: var(--font-md);
+}
+
+.btn-large {
+    width: 100%;
+    max-width: 300px;
+    min-height: 56px;
+    font-size: var(--font-xl);
+}
+
+.btn-small {
+    min-height: 40px;
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-sm);
+    border-radius: 10px;
+}
+
+.btn-icon {
+    font-size: 1.2em;
+}
+
+/* ── Modal Genel ── */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    padding: var(--spacing-lg);
+    max-width: 380px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-surface-light);
+    color: var(--text-secondary);
+    font-size: var(--font-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Toast ── */
+.toast {
+    position: fixed;
+    top: calc(var(--safe-top) + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: var(--font-md);
+    font-weight: 700;
+    z-index: 200;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast.hidden {
+    display: block;
+    opacity: 0;
+}
+
+/* ── Hidden Utility ── */
+.hidden {
+    display: none !important;
+}

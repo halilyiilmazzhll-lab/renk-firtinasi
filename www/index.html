@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Renk Fırtınası — Aile için eğlenceli mobil kart oyunu">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Renk Fırtınası</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+  <!-- ══════════ ANA MENÜ ══════════ -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-container">
+      <div class="logo-area">
+        <div class="logo-icon">🃏</div>
+        <h1 class="game-title">Renk<br>Fırtınası</h1>
+        <p class="game-subtitle">Aile Kart Oyunu</p>
+      </div>
+      <div class="menu-actions">
+        <button class="btn btn-primary btn-large" id="btn-create-room">
+          <span class="btn-icon">🏠</span> Oda Kur
+        </button>
+        <button class="btn btn-secondary btn-large" id="btn-join-room-menu">
+          <span class="btn-icon">🔗</span> Odaya Katıl
+        </button>
+        <button class="btn btn-ghost" id="btn-rules">
+          <span class="btn-icon">📖</span> Kurallar
+        </button>
+      </div>
+      <p class="version-text">v1.0</p>
+    </div>
+  </section>
+
+  <!-- ══════════ ODA KURMA & KATILMA (SETUP) ══════════ -->
+  <section id="screen-setup" class="screen">
+    <div class="setup-container">
+      <h2 class="screen-title" id="setup-title">Oyuncu Bilgisi</h2>
+
+      <div class="player-names-section">
+        <div class="player-name-row">
+          <input type="text" id="input-player-name" class="player-name-input" placeholder="Adınız" maxlength="12">
+        </div>
+        <div class="player-name-row hidden" id="room-code-input-row">
+          <input type="text" id="input-room-code" class="player-name-input" placeholder="Oda Kodu (örn: AB12)"
+            maxlength="4" style="text-transform: uppercase;">
+        </div>
+      </div>
+
+      <div class="setup-actions">
+        <button class="btn btn-primary btn-large" id="btn-action-setup">
+          Tamam
+        </button>
+        <button class="btn btn-ghost" id="btn-back-menu">← Geri</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ LOBİ EKRANI ══════════ -->
+  <section id="screen-lobby" class="screen">
+    <div class="setup-container">
+      <h2 class="screen-title">Oyun Lobisi</h2>
+      <div class="room-code-display">
+        <span class="label">Oda Kodu:</span>
+        <h1 id="display-room-code" style="font-size:3rem; letter-spacing: 4px; color: var(--accent);">----</h1>
+      </div>
+
+      <div class="player-list" id="lobby-player-list"
+        style="width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: var(--spacing-sm); margin: var(--spacing-md) 0;">
+        <!-- JS ile dolacak -->
+      </div>
+
+      <div class="setup-actions">
+        <p id="lobby-waiting-text" style="color: var(--text-muted); margin-bottom: 10px;">Diğer oyuncular bekleniyor...
+        </p>
+        <button class="btn btn-primary btn-large hidden" id="btn-start-game">
+          <span class="btn-icon">🎮</span> Oyunu Başlat
+        </button>
+        <button class="btn btn-ghost" id="btn-leave-lobby">Odan Çık</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ OYUN EKRANI ══════════ -->
+  <section id="screen-game" class="screen">
+    <!-- Üst: Rakipler -->
+    <div class="opponents-bar" id="opponents-bar">
+      <!-- JS ile doldurulur -->
+    </div>
+
+    <!-- Orta: Oyun alanı -->
+    <div class="play-area">
+      <div class="play-area-inner">
+        <div class="deck-zone" id="draw-pile">
+          <div class="card card-back" id="btn-draw">
+            <div class="card-oval"></div>
+            <span class="card-back-text">RF</span>
+          </div>
+          <span class="zone-label">Çek</span>
+        </div>
+        <div class="discard-zone" id="discard-pile">
+          <div class="card" id="top-card">
+            <!-- JS ile doldurulur -->
+          </div>
+          <span class="zone-label">Son Kart</span>
+        </div>
+      </div>
+      <button class="btn btn-firt hidden" id="btn-firt">FIRT!</button>
+      <div class="game-message" id="game-message"></div>
+    </div>
+
+    <!-- Alt: Oyuncu eli -->
+    <div class="hand-area">
+      <div class="current-player-info" id="current-player-info">
+        <!-- JS ile doldurulur -->
+      </div>
+      <div class="hand-scroll" id="hand-scroll">
+        <div class="hand-cards" id="hand-cards">
+          <!-- JS ile doldurulur -->
+        </div>
+      </div>
+      <button class="btn btn-small btn-pass hidden" id="btn-pass">Pas ▶</button>
+    </div>
+  </section>
+
+  <!-- ══════════ SIRA GEÇİŞ EKRANI ══════════ -->
+  <section id="screen-turn" class="screen">
+    <div class="turn-container">
+      <div class="turn-icon">🔄</div>
+      <h2 class="turn-title">Sıra Değişiyor!</h2>
+      <p class="turn-player" id="turn-player-name"></p>
+      <p class="turn-hint">Telefonu eline al ve hazır olunca dokun</p>
+      <button class="btn btn-primary btn-large" id="btn-ready">Hazırım!</button>
+    </div>
+  </section>
+
+  <!-- ══════════ RENK SEÇİMİ MODAL ══════════ -->
+  <div class="modal hidden" id="modal-color">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content color-picker">
+      <h3>Renk Seç</h3>
+      <div class="color-options">
+        <button class="color-option color-red" data-color="red"><span>♦</span></button>
+        <button class="color-option color-blue" data-color="blue"><span>●</span></button>
+        <button class="color-option color-green" data-color="green"><span>▲</span></button>
+        <button class="color-option color-yellow" data-color="yellow"><span>★</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ KAZANAN EKRANI ══════════ -->
+  <section id="screen-winner" class="screen">
+    <div class="winner-container">
+      <div class="winner-confetti" id="winner-confetti"></div>
+      <div class="winner-icon">🏆</div>
+      <h2 class="winner-title">Tebrikler!</h2>
+      <p class="winner-name" id="winner-name"></p>
+      <p class="winner-subtitle">oyunu kazandı!</p>
+      <div class="winner-actions">
+        <button class="btn btn-primary btn-large" id="btn-play-again">
+          <span class="btn-icon">🔄</span> Tekrar Oyna
+        </button>
+        <button class="btn btn-secondary" id="btn-to-menu">
+          <span class="btn-icon">🏠</span> Ana Menü
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ KURALLAR POPUP ══════════ -->
+  <div class="modal hidden" id="modal-rules">
+    <div class="modal-backdrop" id="rules-backdrop"></div>
+    <div class="modal-content rules-content">
+      <button class="modal-close" id="btn-close-rules">✕</button>
+      <h3>📖 Nasıl Oynanır?</h3>
+      <div class="rules-body">
+        <div class="rule-item">
+          <span class="rule-num">1</span>
+          <p>Herkes 7 kart alır. Kalan kartlar desteye konur.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">2</span>
+          <p>Ortadaki kartla aynı <strong>renk</strong>, <strong>sayı</strong> veya <strong>sembol</strong> olan kartı
+            oyna.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">3</span>
+          <p>Uygun kart yoksa desteden <strong>1 kart çek</strong>.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">4</span>
+          <p><strong>Joker kart</strong> her zaman oynanabilir. Renk seçersin.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">5</span>
+          <p><strong>+2 kartı</strong> sonraki oyuncuya 2 kart çektirir ve sırasını atlar.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">6</span>
+          <p><strong>Pas kartı</strong> sonraki oyuncunun sırasını atlar.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">7</span>
+          <p><strong>Ters kartı</strong> oyun yönünü değiştirir.</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">8</span>
+          <p>Son 1 kartın kaldığında <strong>FIRT!</strong> butonuna bas. Basmazsan <strong>2 ceza kartı</strong>
+            çekersin!</p>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">9</span>
+          <p>Elindeki kartları <strong>ilk bitiren kazanır!</strong> 🎉</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TOAST BİLDİRİM ══════════ -->
+  <div class="toast hidden" id="toast">
+    <span id="toast-text"></span>
+  </div>
+  <!-- External socket.io client to allow Capacitor App to work independently -->
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/deck.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

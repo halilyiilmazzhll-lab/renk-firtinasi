@@ -1,0 +1,215 @@
+/* ── Kart Işıltı ── */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ── Logo Yüzme ── */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* ── Gradient Kayma ── */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ── FIRT Nabız ── */
+@keyframes firt-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(255, 107, 53, 0.7);
+    }
+}
+
+/* ── Yavaş Dönüş ── */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── Zıplama Giriş ── */
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ── Konfeti Düşüşü ── */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ── Kart Oynama (yukarı uçma) ── */
+@keyframes card-play {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-60px) scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-120px) scale(0.8);
+        opacity: 0;
+    }
+}
+
+.card-playing {
+    animation: card-play 0.35s ease-out forwards;
+    pointer-events: none;
+}
+
+/* ── Kart Çekme (gelme) ── */
+@keyframes card-draw {
+    0% {
+        transform: translateY(-40px) scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.card-drawing {
+    animation: card-draw 0.3s ease-out forwards;
+}
+
+/* ── Ekran Geçişi ── */
+@keyframes screen-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.screen.active {
+    animation: screen-in 0.25s ease-out;
+}
+
+/* ── Shake (hata) ── */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    75% {
+        transform: translateX(6px);
+    }
+}
+
+.shake {
+    animation: shake 0.3s ease;
+}
+
+/* ── My Turn Glow ── */
+@keyframes screen-glow {
+    0% {
+        box-shadow: inset 0 0 0px var(--accent);
+    }
+
+    30% {
+        box-shadow: inset 0 0 80px rgba(233, 69, 96, 0.4);
+    }
+
+    100% {
+        box-shadow: inset 0 0 0px var(--accent);
+    }
+}
+
+.my-turn-glow {
+    animation: screen-glow 1s ease-out;
+}
+
+.bounce-in {
+    animation: bounce-in 0.4s ease;
+}
+
+/* ── Uçan Kartlar (JavaScript flier) ── */
+.flier-card {
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-radius: var(--card-radius);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

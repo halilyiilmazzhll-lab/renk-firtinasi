@@ -1,0 +1,66 @@
+:root {
+    /* ── Oyun Renkleri ── */
+    --card-red: #e74c3c;
+    --card-red-dark: #c0392b;
+    --card-blue: #3498db;
+    --card-blue-dark: #2980b9;
+    --card-green: #27ae60;
+    --card-green-dark: #219a52;
+    --card-yellow: #f1c40f;
+    --card-yellow-dark: #d4ac0d;
+    --card-wild: #2c3e50;
+    --card-wild-dark: #1a252f;
+
+    /* ── UI Renkleri ── */
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-card-area: #0f3460;
+    --bg-surface: #1e2a4a;
+    --bg-surface-light: #2a3a5c;
+
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0aec0;
+    --text-muted: #6b7c93;
+
+    --accent: #e94560;
+    --accent-glow: rgba(233, 69, 96, 0.3);
+    --success: #27ae60;
+    --warning: #f39c12;
+
+    /* ── Boyutlar ── */
+    --card-width: 62px;
+    --card-height: 90px;
+    --card-radius: 10px;
+    --card-font: 1.2rem;
+
+    --btn-height: 52px;
+    --btn-radius: 14px;
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* ── Tipografi ── */
+    --font-sm: 0.8rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: 1.5rem;
+    --font-2xl: 2rem;
+    --font-3xl: 2.5rem;
+
+    /* ── Geçişler ── */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 400ms ease;
+
+    /* ── Gölgeler ── */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    /* Safe area */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
