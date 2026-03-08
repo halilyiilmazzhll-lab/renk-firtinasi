@@ -150,27 +150,32 @@
   <section id="screen-settings" class="screen">
     <div class="setup-container" style="justify-content: flex-start;">
       <h2 class="screen-title">Ayarlar</h2>
-      
+
       <div class="settings-list" style="width: 100%; max-width: 360px; display:flex; flex-direction:column; gap:16px;">
-        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
-            <span>🎵 Müzik</span>
-            <input type="checkbox" id="setting-music">
+        <label
+          style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+          <span>🎵 Müzik</span>
+          <input type="checkbox" id="setting-music">
         </label>
-        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
-            <span>🔊 Ses Efektleri</span>
-            <input type="checkbox" id="setting-sfx" checked>
+        <label
+          style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+          <span>🔊 Ses Efektleri</span>
+          <input type="checkbox" id="setting-sfx" checked>
         </label>
-        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
-            <span>📳 Titreşim</span>
-            <input type="checkbox" id="setting-vibration" checked>
+        <label
+          style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+          <span>📳 Titreşim</span>
+          <input type="checkbox" id="setting-vibration" checked>
         </label>
-        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
-            <span>🔍 Büyük Kart Modu</span>
-            <input type="checkbox" id="setting-large-cards">
+        <label
+          style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+          <span>🔍 Büyük Kart Modu</span>
+          <input type="checkbox" id="setting-large-cards">
         </label>
-        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
-            <span>⚡ Animasyonları Azalt</span>
-            <input type="checkbox" id="setting-reduce-motion">
+        <label
+          style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+          <span>⚡ Animasyonları Azalt</span>
+          <input type="checkbox" id="setting-reduce-motion">
         </label>
       </div>
 
@@ -327,6 +332,16 @@
   <!-- External socket.io client to allow Capacitor App to work independently -->
   <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
   <script src="js/state.js"></script>
+  <script>
+    // Load Capacitor Core JS if running in WebView
+    const isCapacitor = window.Capacitor !== undefined || /Capacitor/i.test(navigator.userAgent);
+    if (isCapacitor) {
+      const capScript = document.createElement('script');
+      capScript.src = "capacitor.js";
+      document.head.appendChild(capScript);
+    }
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="js/deck.js"></script>
   <script src="js/rules.js"></script>
   <script src="js/renderer.js"></script>

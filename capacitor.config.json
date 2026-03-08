@@ -5,5 +5,15 @@
   "server": {
     "url": "https://renk-firtinasi.onrender.com",
     "cleartext": true
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "64564710390-dl27q2bmrclvhvn3tu86c1q8t4op45h1.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
   }
 }

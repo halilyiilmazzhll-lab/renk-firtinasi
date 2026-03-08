@@ -44,29 +44,56 @@ async function initializeGoogleAuth() {
 }
 
 function initGoogleIdentity(clientId) {
-    if (typeof google === 'undefined' || !google.accounts) {
-        // Retry shortly if script isn't loaded yet
-        setTimeout(() => initGoogleIdentity(clientId), 100);
-        return;
+    const loginDiv = document.getElementById("google-login-button");
+    const isCapacitor = window.Capacitor !== undefined || /Capacitor/i.test(navigator.userAgent);
+
+    if (isCapacitor) {
+        // Native Capacitor Button
+        loginDiv.innerHTML = `<button class="btn btn-primary" style="width:100%; background:#4285F4; border:none;" onclick="triggerCapacitorGoogleLogin()">
+            <span style="background:white; border-radius:2px; padding:2px;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18"/></span>
+            <span style="margin-left:8px; font-weight:500;">Google ile devam edin</span>
+        </button>`;
+    } else {
+        // Web Identity Services
+        if (typeof google === 'undefined' || !google.accounts) {
+            setTimeout(() => initGoogleIdentity(clientId), 100);
+            return;
+        }
+
+        google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleResponse
+        });
+
+        google.accounts.id.renderButton(loginDiv, { theme: "filled_blue", size: "large", width: 250, text: "continue_with" });
     }
+}
 
-    google.accounts.id.initialize({
-        client_id: clientId,
-        callback: handleGoogleResponse
-    });
+async function triggerCapacitorGoogleLogin() {
+    try {
+        // This relies on @codetrix-studio/capacitor-google-auth
+        await Capacitor.Plugins.GoogleAuth.initialize();
+        const googleUser = await Capacitor.Plugins.GoogleAuth.signIn();
 
-    google.accounts.id.renderButton(
-        document.getElementById("google-login-button"),
-        { theme: "filled_blue", size: "large", width: 250, text: "continue_with" }
-    );
+        // Native plugin returns idToken in googleUser.authentication.idToken
+        await processGoogleToken(googleUser.authentication.idToken);
+    } catch (error) {
+        console.error('Capacitor Google Login error:', error);
+        showToast('Google girişi başlatılamadı');
+    }
 }
 
 async function handleGoogleResponse(response) {
+    // Web returns credential
+    await processGoogleToken(response.credential);
+}
+
+async function processGoogleToken(idToken) {
     try {
         const rs = await fetch('/api/auth/google', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: response.credential })
+            body: JSON.stringify({ token: idToken })
         });
 
         const data = await rs.json();
@@ -77,9 +104,11 @@ async function handleGoogleResponse(response) {
 
             showToast(`Hoş geldin, ${googleUser.name}`);
             document.getElementById('input-player-name').value = googleUser.name;
+        } else {
+            showToast(data.message || 'Giriş reddedildi');
         }
     } catch (err) {
-        console.error('Auth error', err);
+        console.error('Server auth error', err);
         showToast('Giriş başarısız.');
     }
 }
