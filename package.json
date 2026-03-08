@@ -1,21 +1,32 @@
 {
   "name": "duno",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Duno - Multiplayer Card Game MVP",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "game",
+    "multiplayer",
+    "cards",
+    "uno"
+  ],
+  "author": "Halil Yilmaz",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "@capacitor/android": "^8.2.0",
     "@capacitor/cli": "^8.2.0",
     "@capacitor/core": "^8.2.0",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "jest": "^30.2.0"
   }
 }

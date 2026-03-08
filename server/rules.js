@@ -41,6 +41,7 @@ function applyCardEffect(card, playerCount) {
         case 'wildDraw4':
             result.pickColor = true;
             result.drawAmount = 4;
+            result.skipNext = true;
             result.message = 'Sonraki oyuncu +4 kart çekiyor!';
             break;
     }
