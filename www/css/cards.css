@@ -267,13 +267,22 @@
 
 /* ── El Kartları ── */
 .hand-card {
-    margin-right: -16px;
-    transition: transform var(--transition-fast), margin-top var(--transition-fast);
+    margin-right: -32px;
+    position: relative;
+    transition: transform var(--transition-fast), margin var(--transition-fast), z-index var(--transition-fast);
+}
+
+.hand-card:hover,
+.hand-card:active {
+    transform: translateY(-20px) scale(1.1);
+    margin-right: 5px;
+    /* Pushes the next card slightly to fully reveal this card */
+    z-index: 20;
 }
 
 .hand-card.selected {
-    transform: translateY(-18px) scale(1.1);
-    z-index: 10;
+    transform: translateY(-25px) scale(1.15);
+    z-index: 30;
     box-shadow: var(--shadow-card-hover);
 }
 
@@ -284,9 +293,9 @@
 /* ── Top Kart (discard) ── */
 #top-card {
     cursor: default;
-    width: 76px;
-    height: 110px;
-    font-size: 1.5rem;
+    width: 82px;
+    height: 116px;
+    font-size: 1.6rem;
 }
 
 #top-card:active {
@@ -299,10 +308,10 @@
 
 /* ── Çekme destesi ── */
 #btn-draw {
-    width: 76px;
-    height: 110px;
+    width: 82px;
+    height: 116px;
 }
 
 #btn-draw .card-back-text {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
 }

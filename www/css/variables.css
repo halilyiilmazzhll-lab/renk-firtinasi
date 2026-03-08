@@ -28,10 +28,10 @@
     --warning: #f39c12;
 
     /* ── Boyutlar ── */
-    --card-width: 62px;
-    --card-height: 90px;
-    --card-radius: 10px;
-    --card-font: 1.2rem;
+    --card-width: 68px;
+    --card-height: 98px;
+    --card-radius: 12px;
+    --card-font: 1.4rem;
 
     --btn-height: 52px;
     --btn-radius: 14px;
