@@ -10,7 +10,7 @@ Oyun kodunu Android'de "WebView" (TWA mantığı) ile çalışacak şekilde opti
 5. Ayarlarda şunları belirleyin:
    - **Environment:** `Node`
    - **Build Command:** `npm install`
-   - **Start Command:** `node server.js`
+   - **Start Command:** `npm start` (veya `node server.js`)
    - Paket planı: **Free ($0/month)** 
 6. "Create Web Service" butonuna tıklayın. İşlem bittiğinde Render size bir adres verecek (Örn: `https://renk-oyunu.onrender.com`). Bu URL'yi **kopyalayın**.
 
