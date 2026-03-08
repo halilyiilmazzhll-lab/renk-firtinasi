@@ -2,9 +2,8 @@
    APP.JS — İstemci Oyun Akışı & Ağ
    ══════════════════════════════════════ */
 
-// Render üzerinde barındırılacak adres (Kullanıcı deploy ettikten sonra güncelleyebilir)
-const PROD_SERVER_URL = 'https://rf-sunucu.onrender.com';
-const socket = io(PROD_SERVER_URL, { transports: ['websocket', 'polling'] });
+// Dinamik olarak bulunduğu sunucuya bağlanır (Localhost veya Render veya TWA)
+const socket = io({ transports: ['websocket', 'polling'] });
 
 document.addEventListener('DOMContentLoaded', initApp);
 
