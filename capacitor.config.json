@@ -3,7 +3,7 @@
   "appName": "duno_game",
   "webDir": "www",
   "server": {
-    "url": "https://rf-sunucu.onrender.com",
+    "url": "https://renk-firtinasi.onrender.com",
     "cleartext": true
   }
 }
