@@ -33,11 +33,18 @@
         <p class="game-subtitle">Aile Kart Oyunu</p>
       </div>
       <div class="menu-actions">
+        <div id="google-login-button" style="min-height: 40px; margin-bottom: var(--spacing-sm);"></div>
         <button class="btn btn-primary btn-large" id="btn-create-room">
           <span class="btn-icon">🏠</span> Oda Kur
         </button>
         <button class="btn btn-secondary btn-large" id="btn-join-room-menu">
           <span class="btn-icon">🔗</span> Odaya Katıl
+        </button>
+        <button class="btn btn-ghost" id="btn-stats" style="margin-top: 8px;">
+          <span class="btn-icon">📊</span> Profil ve İstatistikler
+        </button>
+        <button class="btn btn-ghost" id="btn-settings" style="margin-top: 8px;">
+          <span class="btn-icon">⚙️</span> Ayarlar
         </button>
         <button class="btn btn-ghost" id="btn-rules">
           <span class="btn-icon">📖</span> Kurallar
@@ -78,6 +85,10 @@
       <div class="room-code-display">
         <span class="label">Oda Kodu:</span>
         <h1 id="display-room-code" style="font-size:3rem; letter-spacing: 4px; color: var(--accent);">----</h1>
+        <div style="display: flex; gap: 8px; justify-content: center; margin-top: 10px;">
+          <button class="btn btn-small btn-secondary" id="btn-copy-code">📋 Kopyala</button>
+          <button class="btn btn-small btn-primary" id="btn-share-code">📲 Paylaş</button>
+        </div>
       </div>
 
       <div class="player-list" id="lobby-player-list"
@@ -92,6 +103,79 @@
           <span class="btn-icon">🎮</span> Oyunu Başlat
         </button>
         <button class="btn btn-ghost" id="btn-leave-lobby">Odan Çık</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ İSTATİSTİKLER EKRANI ══════════ -->
+  <section id="screen-stats" class="screen">
+    <div class="setup-container" style="justify-content: flex-start;">
+      <h2 class="screen-title">İstatistikler</h2>
+
+      <div id="stats-unauth" style="text-align:center; color:var(--text-muted); margin-top:20px;">
+        Google ile giriş yapmadığınız için istatistikleriniz kaydedilmiyor.
+      </div>
+
+      <div id="stats-auth" class="hidden"
+        style="width: 100%; max-width: 360px; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:var(--bg-surface); padding:20px; border-radius:16px; text-align:center;">
+          <div style="font-size:3rem; font-weight:900; color:var(--accent);" id="stat-winrate">0%</div>
+          <div style="color:var(--text-secondary); font-size:0.9rem;">Kazanma Oranı</div>
+
+          <div style="display:flex; justify-content:space-around; margin-top:16px;">
+            <div>
+              <div style="font-size:1.5rem; font-weight:bold; color:var(--text-primary);" id="stat-wins">0</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Kazanma</div>
+            </div>
+            <div>
+              <div style="font-size:1.5rem; font-weight:bold; color:var(--text-primary);" id="stat-games">0</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Toplam Maç</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:16px; font-size:1.2rem; color:var(--text-primary);">Son Maçlar</h3>
+        <div id="match-history-list" style="display:flex; flex-direction:column; gap:8px;">
+          <!-- JS ile dolacak -->
+        </div>
+      </div>
+
+      <div class="setup-actions">
+        <button class="btn btn-ghost" id="btn-back-menu-from-stats">← Ana Menü</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ AYARLAR EKRANI ══════════ -->
+  <section id="screen-settings" class="screen">
+    <div class="setup-container" style="justify-content: flex-start;">
+      <h2 class="screen-title">Ayarlar</h2>
+      
+      <div class="settings-list" style="width: 100%; max-width: 360px; display:flex; flex-direction:column; gap:16px;">
+        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+            <span>🎵 Müzik</span>
+            <input type="checkbox" id="setting-music">
+        </label>
+        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+            <span>🔊 Ses Efektleri</span>
+            <input type="checkbox" id="setting-sfx" checked>
+        </label>
+        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+            <span>📳 Titreşim</span>
+            <input type="checkbox" id="setting-vibration" checked>
+        </label>
+        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+            <span>🔍 Büyük Kart Modu</span>
+            <input type="checkbox" id="setting-large-cards">
+        </label>
+        <label style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); padding:16px; border-radius:12px;">
+            <span>⚡ Animasyonları Azalt</span>
+            <input type="checkbox" id="setting-reduce-motion">
+        </label>
+      </div>
+
+      <div class="setup-actions" style="margin-top: 24px;">
+        <button class="btn btn-primary" id="btn-save-settings">Kaydet ve Dön</button>
       </div>
     </div>
   </section>
@@ -236,6 +320,10 @@
   <div class="toast hidden" id="toast">
     <span id="toast-text"></span>
   </div>
+
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <!-- External socket.io client to allow Capacitor App to work independently -->
   <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
   <script src="js/state.js"></script>

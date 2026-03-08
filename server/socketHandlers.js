@@ -4,6 +4,8 @@ const { getNextPlayerIndex, advanceTurn, drawCardsForPlayer, checkWinner, setSaf
 const { validateRoom, validateTurn, validateColor } = require('./validators');
 const { dealCards } = require('./deck');
 const { canPlayCard, applyCardEffect } = require('./rules');
+const { saveMatch } = require('./models');
+const { authenticateSocket } = require('./auth');
 
 function broadcastGameState(io, roomId) {
     const room = getRoom(roomId);
@@ -19,8 +21,20 @@ function registerSocketHandlers(io) {
     io.on('connection', (socket) => {
         console.log('User connected:', socket.id);
 
-        socket.on('createRoom', (playerName, callback) => {
-            console.log(`[CREATE ROOM] İstek geldi. Socket: ${socket.id}, Player: ${playerName}`);
+        socket.on('createRoom', async (data, callback) => {
+            const { playerName, appToken } = data || {};
+            let finalName = playerName || 'Oyuncu';
+            let finalAppToken = null;
+
+            if (appToken) {
+                const user = await authenticateSocket(appToken);
+                if (user) {
+                    finalName = user.name;
+                    finalAppToken = appToken;
+                }
+            }
+
+            console.log(`[CREATE ROOM] İstek geldi. Socket: ${socket.id}, Player: ${finalName}`);
             let roomId;
             do {
                 roomId = generateRoomCode();
@@ -28,8 +42,9 @@ function registerSocketHandlers(io) {
 
             const player = {
                 socketId: socket.id,
-                name: playerName || 'Oyuncu',
-                isHost: true
+                name: finalName,
+                isHost: true,
+                appToken: finalAppToken
             };
 
             const room = createRoom(roomId, player);
@@ -38,7 +53,8 @@ function registerSocketHandlers(io) {
             callback({ success: true, roomId, players: room.players });
         });
 
-        socket.on('joinRoom', ({ roomId, playerName }, callback) => {
+        socket.on('joinRoom', async (data, callback) => {
+            let { roomId, playerName, appToken } = data || {};
             if (!roomId) return callback({ success: false, message: 'Geçersiz oda kodu' });
             roomId = String(roomId).toUpperCase();
             const room = getRoom(roomId);
@@ -48,10 +64,22 @@ function registerSocketHandlers(io) {
             if (room.players.length >= 4) return callback({ success: false, message: 'Oda dolu' });
             if (room.players.some(p => p.socketId === socket.id)) return callback({ success: true, roomId, players: room.players });
 
+            let finalName = playerName || `Oyuncu ${room.players.length + 1}`;
+            let finalAppToken = null;
+
+            if (appToken) {
+                const user = await authenticateSocket(appToken);
+                if (user) {
+                    finalName = user.name;
+                    finalAppToken = appToken;
+                }
+            }
+
             const player = {
                 socketId: socket.id,
-                name: playerName || `Oyuncu ${room.players.length + 1}`,
-                isHost: false
+                name: finalName,
+                isHost: false,
+                appToken: finalAppToken
             };
 
             room.players.push(player);
@@ -183,6 +211,18 @@ function registerSocketHandlers(io) {
                 gs.winner = { name: player.name, socketId: player.socketId };
                 clearSafeTimeout(room, 'firt');
                 clearSafeTimeout(room, 'turn');
+
+                saveMatch({
+                    roomId,
+                    players: gs.players.map(p => ({
+                        socketId: p.socketId,
+                        name: p.name,
+                        appToken: p.appToken
+                    })),
+                    winnerSocketId: player.socketId,
+                    winnerName: player.name
+                });
+
                 io.to(roomId).emit('gameEnded', gs.winner);
                 return;
             }
@@ -304,6 +344,47 @@ function registerSocketHandlers(io) {
             if (player && player.hand.length === 1 && !player.calledFirt) {
                 player.calledFirt = true;
                 io.to(roomId).emit('showToast', `${player.name} FIRT dedi! 🎉`);
+                broadcastGameState(io, roomId);
+            }
+        });
+
+        socket.on('requestRematch', (roomId) => {
+            const room = getRoom(roomId);
+            if (!room || room.status !== 'end') return;
+
+            if (!room.rematchVotes) room.rematchVotes = new Set();
+            room.rematchVotes.add(socket.id);
+
+            const player = room.players.find(p => p.socketId === socket.id);
+            if (player) {
+                io.to(roomId).emit('showToast', `${player.name} rövanş istiyor!`);
+            }
+
+            if (room.rematchVotes.size === room.players.length) {
+                const playerCount = room.players.length;
+                const { hands, drawPile, firstCard } = dealCards(playerCount);
+
+                room.status = 'playing';
+                room.gameState = {
+                    phase: 'playing',
+                    players: room.players.map((p, i) => ({
+                        ...p,
+                        hand: hands[i],
+                        calledFirt: false
+                    })),
+                    currentPlayerIndex: 0,
+                    direction: 1,
+                    drawPile: drawPile,
+                    discardPile: [firstCard],
+                    currentColor: firstCard.color,
+                    hasDrawnThisTurn: false,
+                    firtRequired: false
+                };
+
+                room.rematchVotes.clear();
+                io.to(roomId).emit('rematchAccepted');
+                io.to(roomId).emit('gameStarted');
+                updateActivity(roomId);
                 broadcastGameState(io, roomId);
             }
         });
